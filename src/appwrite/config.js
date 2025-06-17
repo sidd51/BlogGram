@@ -27,7 +27,7 @@ export class Service{
                     featuredImage,
                     status,
                     userId,
-                    
+                    authorEmail: user.email,
                 }
             )
         } catch (error) {

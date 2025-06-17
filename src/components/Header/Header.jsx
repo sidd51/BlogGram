@@ -25,8 +25,8 @@ function Header() {
       active: !authStatus,
   },
   {
-      name: "All Posts",
-      slug: "/all-posts",
+      name: "My Posts",
+      slug: "/my-posts",
       active: authStatus,
   },
   {
@@ -49,14 +49,14 @@ function Header() {
       </div>
 
       {/* Navigation Links */}
-      <ul className="flex items-center space-x-4 text-sm font-medium text-slate-700">
+      <ul className="flex gap-2 overflow-x-auto no-scrollbar whitespace-nowrap px-1 sm:flex-wrap items-center space-x-4 text-sm font-medium text-slate-700">
         {navItems.map(
           (item) =>
             item.active && (
               <li key={item.name}>
                 <Link
                   to={item.slug}
-                  className="px-4 py-2  hover:text-red-600 transition duration-120"
+                  className="px-4 py-2  hover:text-red-600 transition duration-120   sm:text-base whitespace-nowrap"
                 >
                   {item.name}
                 </Link>

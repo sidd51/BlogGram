@@ -43,53 +43,56 @@ export default function Post() {
         });
     };
 
-    return post ? (
-        <div className=" bg-zinc-700 text-black min-h-screen p-2">
-            <Container>
-                <div className="max-w-12xl m-10 bg-white rounded-lg shadow-xl  p-6 relative">
-                    {/* Image */}
-                    <div className="flex justify-center mb-6">
-                        <img
-                            src={appwriteService.getFileView(post.featuredImage)}
-                            alt={post.title}
-                            className="rounded-2xl max-h-[500px] w-full object-contain border border-gray-300 shadow-md"
-                        />
-                    </div>
+return post ? (
+  <div className="bg-zinc-700 text-black min-h-screen p-2">
+    <Container>
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-4 sm:p-6 relative">
 
-                    {/* Title */}
-                    <h1 className="text-3xl font-extrabold text-red-500 mb-1">{post.title}</h1>
-
-                   
-                        <h3 className="text-lg text-zinc-500 ">
-                          {post.$id}
-                        </h3>
+                     {/* Post Image */}
+        <div className="w-full mb-4 rounded-md overflow-hidden border border-gray-300 shadow">
+          <img
+            src={appwriteService.getFileView(post.featuredImage)}
+            alt={post.title}
+            className="w-full max-h-[400px] object-contain rounded-md"
+          />
+        </div>
+                     {/* Post Title & ID */}
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-red-500 mb-1">{post.title}</h1>
+        <h3 className="text-sm sm:text-base text-zinc-500 mb-4">{post.$id}</h3>
                        
 
-                
+                    <h3 className="text-sm sm:text-base text-zinc-500 mb-4">
+  Posted by: {post.authorEmail || "Anonymous"}
+</h3>
+
                     
 
-                    {/* Content */}
-                    <div className="prose max-w-none text-md font-serif leading-relaxed text-gray-800">
-                        {parse(post.content)}
-                    </div>
+     
+        {/* Post Content */}
+        <div className="prose max-w-none text-sm sm:text-base font-serif leading-relaxed text-gray-800">
+          {parse(post.content)}
+        </div>
 
-                    {/* Edit/Delete */}
-                    {isAuthor && (
-                        <div className="absolute right-6 bottom-6 flex gap-3">
-                            <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-white" className="!text-red-500 px-2 py-0 rounded-lg outline-dashed hover:! text-red-700 transition-transform duration-200">
-                                    Edit
-                                </Button>
-                            </Link>
-                            <Button
-                                bgColor="bg-white"
-                                className=" !text-red-500 px-2 py-0 rounded-lg outline-dashed"
-                                onClick={deletePost}
-                            >
-                                Delete
-                            </Button>
-                        </div>
-                    )}
+                     {/* Edit/Delete Buttons (moved below content) */}
+        {isAuthor && (
+          <div className="flex justify-end gap-3 mt-6">
+            <Link to={`/edit-post/${post.$id}`}>
+              <Button
+                bgColor="bg-white"
+                className="!text-red-500 px-1 py-1 rounded-md border border-red-400 hover:!text-red-600"
+              >
+                Edit
+              </Button>
+            </Link>
+            <Button
+              bgColor="bg-white"
+              className="!text-red-500 px-1 py-1 rounded-md border border-red-400 hover:!text-red-600"
+              onClick={deletePost}
+            >
+              Delete
+            </Button>
+          </div>
+        )}
                 </div>
             </Container>
         </div>

@@ -10,10 +10,10 @@ function Footer() {
       {/* Logo + Copyright */}
       <div className="w-full p-6 md:w-1/2 lg:w-5/12">
         <div className="flex h-full flex-col justify-between">
-          <div className="mb-4 inline-flex items-center">
+          <div className="mb-4 inline-flex items-center justify-center mx-auto mt-4">
             <Logo width="150px" />
           </div>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-500 items-center justify-center">
             &copy; 2025. All Rights Reserved by DevBlog.
           </p>
         </div>
