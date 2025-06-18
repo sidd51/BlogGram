@@ -5,20 +5,29 @@ import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+
+
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
             title: post?.title || "",
-            slug: post?.$id || "",
+            slug: post?.slug || "",
             content: post?.content || "",
             status: post?.status || "active",
         },
     });
-
+    const [isSlugManuallyEdited, setIsSlugManuallyEdited] = React.useState(false);
     const navigate = useNavigate();
-    const userData = useSelector((state) => state.auth.userData);
+   const { userData } = useSelector((state) => state.auth.userData || {});
+   
+    const [imagePreview, setImagePreview] = React.useState(null);
 
     const submit = async (data) => {
+         const updatedSlug = isSlugManuallyEdited
+        ? data.slug
+        : slugTransform(getValues("title"));
+
+        
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
@@ -26,30 +35,42 @@ export default function PostForm({ post }) {
                 appwriteService.deleteFile(post.featuredImage);
             }
 
+
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
-                featuredImage: file ? file.$id : undefined,
+                slug: updatedSlug,
+                authorName: userData?.name || "Anonymous",
             });
 
-            if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
-            }
+                if (dbPost) {
+                   navigate(`/post/${updatedSlug}`, { replace: true });
+                }
+
+
+
         } else {
             const file = await appwriteService.uploadFile(data.image[0]);
 
             if (file) {
                 const fileId = file.$id;
                 data.featuredImage = fileId;
-
+               
                 if (!userData || !userData.$id) {
                     console.error("❌ User data missing");
                     return;
                 }
 
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id,  });
+                const dbPost = await appwriteService.createPost({
+    ...data,
+    userId: userData.$id,
+    authorName: userData.name,
+    slug: updatedSlug,
+});
 
                 if (dbPost) {
-                    navigate(`/post/${dbPost.$id}`);
+  navigate(`/post/${dbPost.slug}`, { replace: true });
+
+
                 }
             }
         }
@@ -68,7 +89,7 @@ export default function PostForm({ post }) {
 
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
-            if (name === "title") {
+            if (name === "title" && !isSlugManuallyEdited) {
                 setValue("slug", slugTransform(value.title), { shouldValidate: true });
             }
         });
@@ -92,7 +113,9 @@ export default function PostForm({ post }) {
                     className="mb-4 font-light"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
+                        setIsSlugManuallyEdited(true);
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
+                       
                     }}
                 />
                 <RTE
@@ -110,13 +133,20 @@ export default function PostForm({ post }) {
                     type="file"
                     className="mb-4 border border-black rounded"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
-                    {...register("image", { required: !post })}
+                    {...register("image", { required: !post, onChange:
+                        (e)=>{
+                            const file=e.target.files[0];
+                            if(file){
+                                setImagePreview(URL.createObjectURL(file));
+                            }
+                        }
+                     })}
                 />
-                {post && (
+                {(imagePreview || post?.featuredImage) && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFileView(post.featuredImage)}
-                            alt={post.title}
+                            src={imagePreview || appwriteService.getFileView(post.featuredImage)}
+                            alt={post?.title ||" "}
                             className="rounded-lg border border-red-500"
                         />
                     </div>

@@ -7,13 +7,15 @@ import { useSelector } from "react-redux";
 
 export default function Post() {
     const [post, setPost] = useState(null);
-    const [authorName, setAuthorName] = useState("");
+
+
     const { slug } = useParams();
     const navigate = useNavigate();
 
-    const userData = useSelector((state) => state.auth.userData);
+    const userData = useSelector((state) => state.auth.userData?.userData);
+   
     const isAuthor = post && userData ? post.userId === userData.$id : false;
-
+;
    
 
   
@@ -21,6 +23,7 @@ export default function Post() {
     useEffect(() => {
         if (slug) {
             appwriteService.getPost(slug).then((post) => {
+               
                 if (post) {
                     setPost(post);
 
@@ -32,7 +35,9 @@ export default function Post() {
         } else {
             navigate("/");
         }
-    }, [slug, navigate]);
+    }, [slug, navigate,userData]);
+
+    
 
     const deletePost = () => {
         appwriteService.deletePost(post.$id).then((status) => {
@@ -44,12 +49,12 @@ export default function Post() {
     };
 
 return post ? (
-  <div className="bg-zinc-700 text-black min-h-screen p-2">
+  <div className="bg-zinc-900 text-black min-h-screen p-2">
     <Container>
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-4 sm:p-6 relative">
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-4 sm:p-6 relative mb-4">
 
                      {/* Post Image */}
-        <div className="w-full mb-4 rounded-md overflow-hidden border border-gray-300 shadow">
+        <div className="w-full mb-6 rounded-md overflow-hidden border border-gray-300 shadow mb-5">
           <img
             src={appwriteService.getFileView(post.featuredImage)}
             alt={post.title}
@@ -57,19 +62,20 @@ return post ? (
           />
         </div>
                      {/* Post Title & ID */}
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-red-500 mb-1">{post.title}</h1>
-        <h3 className="text-sm sm:text-base text-zinc-500 mb-4">{post.$id}</h3>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-red-600 mb-1">{post.title}</h1>
+        <h3 className="text-sm sm:text-base text-zinc-500 mb-2">{post.slug}</h3>
                        
 
-                    <h3 className="text-sm sm:text-base text-zinc-500 mb-4">
-  Posted by: {post.authorEmail || "Anonymous"}
+   <h3 className="text-sm sm:text-base text-zinc-500 mb-5">
+  Author: {post?.authorName || "Anonymous"}
 </h3>
+
 
                     
 
      
         {/* Post Content */}
-        <div className="prose max-w-none text-sm sm:text-base font-serif leading-relaxed text-gray-800">
+        <div className="prose max-w-none text-sm sm:text-base font-serif leading-relaxed text-gray-800 mb-3">
           {parse(post.content)}
         </div>
 
@@ -79,14 +85,14 @@ return post ? (
             <Link to={`/edit-post/${post.$id}`}>
               <Button
                 bgColor="bg-white"
-                className="!text-red-500 px-1 py-1 rounded-md border border-red-400 hover:!text-red-600"
+                className="!text-red-500  py-0 rounded-md border border-red-400 shadow-md hover:!text-red-600 h-8"
               >
                 Edit
               </Button>
             </Link>
             <Button
               bgColor="bg-white"
-              className="!text-red-500 px-1 py-1 rounded-md border border-red-400 hover:!text-red-600"
+              className="!text-red-500  py-0 rounded-md border border-red-400 hover:!text-red-600 h-8  shadow-md"
               onClick={deletePost}
             >
               Delete

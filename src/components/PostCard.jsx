@@ -1,14 +1,15 @@
 import React from 'react';
 import appwriteService from '../appwrite/config';
 import { Link } from 'react-router-dom';
-import { ClipboardCopy } from 'lucide-react';
 
-function PostCard({ $id, title, featuredImage}) {
+
+function PostCard({ $id, title, featuredImage, slug }) {
     
 
     return (
-        <Link to={`/post/${$id}`} className="w-full sm:w-1/2 lg:w-1/3 p-3">
-            <div className="bg-zinc-900 text-zinc-100 rounded-xl border border-zinc-700 hover:border-red-600 transition-shadow hover:shadow-xl hover:scale-[1.02] duration-200 overflow-hidden h-full flex flex-col p-4">
+<Link to={`/post/${slug}`} className="w-full sm:w-1/2 lg:w-1/3 p-3">
+
+            <div className="bg-zinc-900 text-zinc-100 rounded-xl border border-zinc-700 hover:border-red-600 transition-shadow hover:shadow-xl hover:scale-[1.02] duration-200 overflow-hidden h-full flex flex-col p-4 ">
 
                 {/* Image */}
                 <div className="w-full h-48 mb-4 rounded-md overflow-hidden border border-zinc-800 aspect-video">
@@ -22,13 +23,13 @@ function PostCard({ $id, title, featuredImage}) {
                
 
                 {/* Title */}
-                <h2 className="text-xl font-semibold mb-1 line-clamp-2">
+                <h2 className="text-xl font-semibold mb-1 line-clamp-2 mt-5">
                     {title}
                 </h2>
 
-                {/* ID + Copy */}
-                <div className="flex items-center justify-center text-sm text-zinc-400">
-                    <span className="truncate max-w-[80%]">{ $id }</span>
+                {/* ID  */}
+                <div className="flex items-center justify-center text-sm text-zinc-400 mt-2">
+                    <span className="truncate max-w-[80%]">{slug || $id}</span>
                   
                 </div>
 

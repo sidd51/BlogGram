@@ -1,32 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import appwriteService from "../appwrite/config";
 import { Container, PostCard } from '../components';
-
+import { useSelector } from 'react-redux';
+import { Query } from "appwrite";
 function Home() {
     const [posts, setPosts] = useState([]);
-
+     const userData = useSelector((state) => state.auth.userData?.userData);
+   
     useEffect(() => {
-        appwriteService.getPosts().then((posts) => {
-            if (posts) {
-                setPosts(posts.documents);
-            }
-        });
-    }, []);
+        if (userData?.$id) {
+            appwriteService
+                .getPosts([
+                    // Only fetch posts by logged-in user
+                    Query.equal("status", "active"),
+                    Query.equal("userId", userData.$id)
+                ])
+                .then((posts) => {
+                    if (posts) {
+                        setPosts(posts.documents);
+                    }
+                });
+        }
+    }, [userData]);
 
-    if (posts.length === 0) {
+    // Show message if no user is logged in
+    if (!userData) {
         return (
             <div className="w-full py-8 mt-4 text-center ">
                 <Container>
                     <div className="flex justify-center">
-                        <h1 className="text-2xl font-bold hover:text-gray-500">
-                            Login to read posts
+                        <h1 className="text-2xl font-bold text-gray-700">
+                            Please log in to view your posts
                         </h1>
                     </div>
                 </Container>
             </div>
         );
     }
-
     return (
         <div className="w-full py-8 ">
             <Container>
@@ -34,7 +44,7 @@ function Home() {
                     {posts.map((post) => (
                         <div
                             key={post.$id}
-                            className="w-full sm:w-1/2 lg:w-1/4 px-1 mb-2"
+                            className="w-full sm:w-1/2 lg:w-1/4 px-1 mb-5 shadow-sm"
                         >
                             <PostCard {...post} />
                         </div>

@@ -19,7 +19,14 @@ function Signup() {
             const userData = await authService.createAccount(data)
             if (userData) {
                 const userData = await authService.getCurrentUser()
-                if(userData) dispatch(login(userData));
+               if (userData) {
+    dispatch(login({
+    $id: userData.$id,
+    email: userData.email,
+    name: userData.name || "Anonymous",
+}));
+
+}
                 navigate("/")
             }
         } catch (error) {
