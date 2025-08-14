@@ -59,13 +59,15 @@ Add your Appwrite endpoint and project ID in an .env file:
 
       npm run dev
 
-📸 Screenshots
+
 
       
-![Homepage Screenshot](./src/assets/Screenshot 2025-08-14 at 15.58.30.png)
+## 📸 Screenshots
 
+![Homepage Screenshot](./src/assets/Screenshot%202025-08-14%20at%2015.58.30.png)
 
-![AddBlog Screenshot](./src/assets/Screenshot 2025-08-14 at 16.41.05.png)
+![Add Blog Screenshot](./src/assets/Screenshot%202025-08-14%20at%2016.41.05.png)
+
 
 
 🌐 Live Demo
