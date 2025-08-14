@@ -61,7 +61,11 @@ Add your Appwrite endpoint and project ID in an .env file:
 
 📸 Screenshots
 
-      <img width="1430" height="785" alt="Screenshot 2025-08-14 at 15 58 30" src="https://github.com/user-attachments/assets/c48b1741-365d-406d-829b-bb99ad529041" />
+      
+![Homepage Screenshot](./src/assets/Screenshot 2025-08-14 at 15.58.30.png)
+
+
+![AddBlog Screenshot](./src/assets/Screenshot 2025-08-14 at 16.41.05.png)
 
 
 🌐 Live Demo
