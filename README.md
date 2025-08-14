@@ -72,7 +72,7 @@ Add your Appwrite endpoint and project ID in an .env file:
 
 🌐 Live Demo
 
-    https://blog-gram-appwrite.vercel.app/
+   Visit https://blog-gram-appwrite.vercel.app/
 
 📜 License
 
