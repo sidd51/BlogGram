@@ -21,7 +21,7 @@ export class Service {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                ID.unique(), // ✅ generate unique document ID
+                ID.unique(), 
                 {
                     title,
                     content,
@@ -29,7 +29,7 @@ export class Service {
                     status,
                     userId,
                     authorName,
-                    slug // ✅ store slug as a field, not ID
+                    slug 
                 }
             );
         } catch (error) {
@@ -43,14 +43,14 @@ export class Service {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                id, // ✅ use document ID, not slug
+                id, 
                 {
                     title,
                     content,
                     featuredImage,
                     status,
                     authorName,
-                    slug // ✅ update slug field
+                    slug 
                 }
             );
         } catch (error) {

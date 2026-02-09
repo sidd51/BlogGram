@@ -15,7 +15,7 @@ function MyPosts() {
             try {
                 const user = await authService.getCurrentUser();
                 if (!user) {
-                    navigate("/login"); // 🚫 Redirect if not logged in
+                    navigate("/login"); 
                     return;
                 }
 
