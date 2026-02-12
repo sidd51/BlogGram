@@ -42,7 +42,7 @@ function Home() {
   }
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-8 bg-slate-100">
       <Container>
         {/* If no posts found */}
         {posts.length === 0 ? (

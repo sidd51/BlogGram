@@ -15,7 +15,7 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
-    // ✅ Create a new post with unique ID
+    //  Create a new post with unique ID
     async createPost({ title, slug, content, featuredImage, status, userId, authorName }) {
         try {
             return await this.databases.createDocument(
@@ -37,7 +37,7 @@ export class Service {
         }
     }
 
-    // ✅ Update using real document $id
+    //  Update using real document $id
     async updatePost(id, { title, content, featuredImage, status, authorName, slug }) {
         try {
             return await this.databases.updateDocument(
@@ -58,7 +58,7 @@ export class Service {
         }
     }
 
-    // ✅ Delete using real document $id
+    //  Delete using real document $id
     async deletePost(id) {
         try {
             await this.databases.deleteDocument(
@@ -73,7 +73,7 @@ export class Service {
         }
     }
 
-    // ✅ Get a post by slug field (not ID)
+    //  Get a post by slug field (not ID)
     async getPost(slug) {
         try {
             const response = await this.databases.listDocuments(
@@ -100,7 +100,7 @@ export class Service {
     return null;
   }
 }
-    // ✅ Get all posts (or filtered)
+    //  Get all posts (or filtered)
     async getPosts(queries = [Query.equal("status", "active")]) {
         try {
             return await this.databases.listDocuments(
@@ -114,7 +114,7 @@ export class Service {
         }
     }
 
-    // ✅ File upload service
+    //  File upload service
     async uploadFile(file) {
         try {
             const result = await this.bucket.createFile(
@@ -130,7 +130,7 @@ export class Service {
         }
     }
 
-    // ✅ Delete uploaded file
+    //  Delete uploaded file
     async deleteFile(fileId) {
         try {
             await this.bucket.deleteFile(
@@ -144,7 +144,7 @@ export class Service {
         }
     }
 
-    // ✅ Get preview URL for a file
+    //  Get preview URL for a file
     getFileView(fileId) {
         return this.bucket.getFileView(conf.appwriteBucketId, fileId);
     }

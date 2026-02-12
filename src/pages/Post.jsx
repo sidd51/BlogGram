@@ -49,58 +49,72 @@ export default function Post() {
     };
 
 return post ? (
-  <div className="bg-zinc-900 text-black min-h-screen p-2">
+  <div className="bg-gray-50 min-h-screen py-10 px-4">
     <Container>
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl p-4 sm:p-6 relative mb-4">
+      <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
-                     {/* Post Image */}
-        <div className="w-full mb-6 rounded-md overflow-hidden border border-gray-300 shadow mb-5">
+        {/* Post Image */}
+        <div className="w-full">
           <img
             src={appwriteService.getFileView(post.featuredImage)}
             alt={post.title}
-            className="w-full max-h-[400px] object-contain rounded-md"
+            className="w-full max-h-[420px] object-cover"
           />
         </div>
-                     {/* Post Title & ID */}
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-red-600 mb-1">{post.title}</h1>
-        <h3 className="text-sm sm:text-base text-zinc-500 mb-2">{post.slug}</h3>
-                       
 
-   <h3 className="text-sm sm:text-base text-zinc-500 mb-5">
-  Author: {post?.authorName || "Anonymous"}
-</h3>
+        {/* Post Body */}
+        <div className="p-6 sm:p-10 space-y-6">
 
+          {/* Title */}
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+              {post.title}
+            </h1>
 
-                    
+            {/* Meta Info */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 mt-3 text-sm text-gray-500">
+              <p>
+                <span className="font-medium text-gray-600">Slug:</span>{" "}
+                {post.slug}
+              </p>
 
-     
-        {/* Post Content */}
-        <div className="prose max-w-none text-sm sm:text-base font-serif leading-relaxed text-gray-800 mb-3">
-          {parse(post.content)}
-        </div>
-
-                     {/* Edit/Delete Buttons (moved below content) */}
-        {isAuthor && (
-          <div className="flex justify-end gap-3 mt-6">
-            <Link to={`/edit-post/${post.$id}`}>
-              <Button
-                bgColor="bg-white"
-                className="!text-red-500  py-0 rounded-md border border-red-400 shadow-md hover:!text-red-600 h-8"
-              >
-                Edit
-              </Button>
-            </Link>
-            <Button
-              bgColor="bg-white"
-              className="!text-red-500  py-0 rounded-md border border-red-400 hover:!text-red-600 h-8  shadow-md"
-              onClick={deletePost}
-            >
-              Delete
-            </Button>
+              <p>
+                <span className="font-medium text-gray-600">Author:</span>{" "}
+                {post?.authorName || "Anonymous"}
+              </p>
+            </div>
           </div>
-        )}
-                </div>
-            </Container>
+
+          {/* Divider */}
+          <hr className="border-gray-200" />
+
+          {/* Content */}
+          <div className="prose max-w-none text-gray-800 leading-relaxed text-base sm:text-lg">
+            {parse(post.content)}
+          </div>
+
+          {/* Actions */}
+          {isAuthor && (
+            <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
+              <Link to={`/edit-post/${post.$id}`}>
+                <Button className="px-5 py-2 rounded-lg bg-white border border-gray-300 
+                !text-black hover:bg-gray-100 transition">
+                  Edit
+                </Button>
+              </Link>
+
+              <Button
+                onClick={deletePost}
+                className="px-5 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+              >
+                Delete
+              </Button>
+            </div>
+          )}
         </div>
-    ) : null;
+      </div>
+    </Container>
+  </div>
+) : null;
+
 }
