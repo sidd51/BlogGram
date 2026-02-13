@@ -16,9 +16,20 @@ export default function Post() {
    
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 ;
-   
+   const [summary, setSummary]=useState("");
+   const [loading, setLoading]=useState(false);
 
-  
+   const handleSummarize= async()=>{
+     const response= await fetch("/api/summarize",{
+      method: "POST",
+      headers:{ "Content-Type": "application/json"},
+      body: JSON.stringify({text: value}),
+     });
+     const data=await response.json();
+     console.log(data);
+     setSummary(data.summary);
+     setLoading(false);
+      };
 
     useEffect(() => {
         if (slug) {
