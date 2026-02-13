@@ -101,7 +101,7 @@ return post ? (
 
           {/* Content */}
           <div className=" max-w-none text-gray-800  text-base sm:text-lg">
-           <div className="prose prose-lg max-w-none">
+           <div className="prose prose-lg max-w-none !text-left">
          {parse(post.content)}
           </div>
 

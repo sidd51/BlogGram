@@ -38,7 +38,12 @@ export default function RTE({ name = "content", control, label, defaultValue = "
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' }
               ],
-              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                setup: (editor) => {
+                editor.on("init", () => {
+                  editor.execCommand("JustifyLeft");
+                });
+              },
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; text-align: left !important }',
               ai_request: (request, respondWith) =>
                 respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
             }}
