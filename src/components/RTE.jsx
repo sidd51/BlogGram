@@ -17,39 +17,52 @@ export default function RTE({ name = "content", control, label, defaultValue = "
             value={value}
             onEditorChange={onChange}
             init={{
-              height: 500,
-              menubar: true,
-              plugins: [
-                'anchor', 'autolink', 'charmap', 'codesample', 'emoticons',
-                'image', 'link', 'lists', 'media', 'searchreplace', 'table',
-                'visualblocks', 'wordcount', 'checklist', 'mediaembed',
-                'casechange', 'formatpainter', 'pageembed', 'a11ychecker',
-                'tinymcespellchecker', 'permanentpen', 'powerpaste',
-                'advtable', 'advcode', 'editimage', 'advtemplate', 'ai',
-                'mentions', 'tinycomments', 'tableofcontents', 'footnotes',
-                'mergetags', 'autocorrect', 'typography', 'inlinecss',
-                'markdown', 'importword', 'exportword', 'exportpdf'
-              ],
-              toolbar:
-                'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-              tinycomments_mode: 'embedded',
-              tinycomments_author: 'Author name',
-              mergetags_list: [
-                { value: 'First.Name', title: 'First Name' },
-                { value: 'Email', title: 'Email' }
-              ],
-                setup: (editor) => {
-                editor.on("init", () => {
-                  editor.execCommand("JustifyLeft");
-                });
-              },
-              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; text-align: left !important }',
-              ai_request: (request, respondWith) =>
-                respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-            }}
-          />
-        )}
-      />
-    </div>
-  );
-}
+            height: 500,
+            menubar: true,
+
+            plugins: [
+              "lists", "link", "image", "media", "table",
+              "wordcount", "autolink", "charmap"
+            ],
+
+            toolbar:
+              "undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | removeformat",
+
+            setup: (editor) => {
+              editor.on("init", () => {
+                editor.execCommand("JustifyLeft");
+              });
+            },
+
+            content_style: `
+              body {
+                font-family: Helvetica, Arial, sans-serif;
+                font-size: 15px;
+                line-height: 1.7;
+                text-align: left !important;
+                padding: 12px;
+              }
+
+              p { margin: 0 0 14px; }
+
+              h1, h2, h3 {
+                font-weight: bold;
+                margin: 18px 0 10px;
+              }
+
+              ul, ol {
+                margin-left: 20px;
+              }
+
+              li {
+                margin-bottom: 6px;
+              }
+            `,
+          }}
+
+                    />
+                  )}
+                />
+              </div>
+            );
+          }

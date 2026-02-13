@@ -99,13 +99,10 @@ return post ? (
           {/* Divider */}
           <hr className="border-gray-200" />
 
-          {/* Content */}
-          <div className=" max-w-none text-gray-800  text-base sm:text-lg">
-           <div className="prose prose-lg max-w-none !text-left">
-         {parse(post.content)}
+          <div className="prose prose-lg sm:prose-xl max-w-none text-gray-800 leading-relaxed text-left">
+            {parse(post.content)}
           </div>
 
-          </div>
 
           {/* Actions */}
           {isAuthor && (
